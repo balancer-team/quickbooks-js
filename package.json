@@ -1,8 +1,9 @@
 {
   "name": "@balancer-team/quickbooks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "QuickBooks Javascript Client",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "test": "test"
   },
