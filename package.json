@@ -1,6 +1,6 @@
 {
   "name": "@balancer-team/quickbooks",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "QuickBooks Javascript Client",
   "main": "index.js",
   "directories": {
@@ -18,5 +18,7 @@
   },
   "dependencies": {
     "zod": "^3.23.8"
-  }
+  },
+  "repository": "github:balancer-team/quickbooks-js",
+  "homepage": "https://www.balancer.team"
 }
