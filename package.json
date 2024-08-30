@@ -1,0 +1,22 @@
+{
+  "name": "@balancer-team/quickbooks",
+  "version": "0.0.1",
+  "description": "QuickBooks Javascript Client",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --require ts-node/register --test test/*.test.ts"
+  },
+  "author": "Alan Hettinger",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
