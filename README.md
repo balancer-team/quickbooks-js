@@ -1,6 +1,6 @@
 # QuickBooks JavaScript Client
 
-JavaScript library for easy QuickBooks API access
+JavaScript library for easy QuickBooks API access.
 
 ### Install
 
