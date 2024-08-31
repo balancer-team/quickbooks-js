@@ -198,11 +198,9 @@ class QuickBooks {
             },
         });
         const data = await res.json();
-        console.log(data);
         // Check if data has a property called CompanyInfo
-        const companyInfo = zod_1.z.object({ CompanyInfo: zod_1.z.any() }).parse(data);
-        console.log(companyInfo);
-        return companyInfo;
+        const parsed = zod_1.z.object({ CompanyInfo: zod_1.z.any() }).parse(data);
+        return parsed.CompanyInfo;
     }
     async apiGet(token, path) {
         // Build the url

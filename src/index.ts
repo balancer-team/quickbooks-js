@@ -220,14 +220,10 @@ export class QuickBooks {
 
     const data = await res.json()
 
-    console.log(data)
-
     // Check if data has a property called CompanyInfo
-    const companyInfo = z.object({ CompanyInfo: z.any() }).parse(data)
+    const parsed = z.object({ CompanyInfo: z.any() }).parse(data)
 
-    console.log(companyInfo)
-
-    return companyInfo
+    return parsed.CompanyInfo
   }
 
   async apiGet(token: Token, path: string) {
