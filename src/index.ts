@@ -187,7 +187,6 @@ export class QuickBooks {
     // })
 
     const res = await fetch(this.userEndpoint, {
-      method: 'POST',
       headers: {
         Authorization: `Bearer ${token.access_token}`,
         Accept: 'application/json',
