@@ -186,7 +186,7 @@ export class QuickBooks {
     //   },
     // })
 
-    const res = await fetch(this.tokenEndpoint, {
+    const res = await fetch(this.userEndpoint, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token.access_token}`,
@@ -195,6 +195,7 @@ export class QuickBooks {
     })
 
     const data = await res.json()
+    console.log(data)
     const userInfo = userInfoSchema.parse(data)
     return userInfo
   }
