@@ -94,7 +94,7 @@ class QuickBooks {
     }
     parseToken(token, realm_id) {
         // console.log(token)
-        token = schemas_1.baseTokenSchema.parse(token);
+        // token = baseTokenSchema.parse(token)
         return {
             ...token,
             realm_id,
