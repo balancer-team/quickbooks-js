@@ -177,9 +177,9 @@ class QuickBooks {
             },
         });
         const data = await res.json();
-        console.log(data);
-        const userInfo = schemas_1.userInfoSchema.parse(data);
-        return userInfo;
+        // console.log(data)
+        // const userInfo = userInfoSchema.parse(data)
+        return data;
     }
     async getCompanyInfo(token) {
         // Build the url

@@ -177,7 +177,7 @@ export class QuickBooks {
     return refreshedToken
   }
 
-  async getUserInfo(token: Token): Promise<UserInfo> {
+  async getUserInfo(token: Token): Promise<any> {
     // // Use axios to get the user info
     // const res = await axios.get(this.userEndpoint, {
     //   headers: {
@@ -194,9 +194,9 @@ export class QuickBooks {
     })
 
     const data = await res.json()
-    console.log(data)
-    const userInfo = userInfoSchema.parse(data)
-    return userInfo
+    // console.log(data)
+    // const userInfo = userInfoSchema.parse(data)
+    return data
   }
 
   async getCompanyInfo(token: Token): Promise<any> {

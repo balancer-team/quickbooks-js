@@ -1,4 +1,4 @@
-import { Grant, Config, Token, UserInfo } from './schemas';
+import { Grant, Config, Token } from './schemas';
 export declare class QuickBooks {
     readonly clientId: string;
     readonly clientSecret: string;
@@ -25,7 +25,7 @@ export declare class QuickBooks {
     getAuthHeader(): string;
     getTokenFromGrant(grant: Grant): Promise<Token>;
     getRefreshedToken(token: Token): Promise<Token>;
-    getUserInfo(token: Token): Promise<UserInfo>;
+    getUserInfo(token: Token): Promise<any>;
     getCompanyInfo(token: Token): Promise<any>;
     apiGet(token: Token, path: string): Promise<unknown>;
     apiPost(token: Token, path: string, body: any): Promise<unknown>;
