@@ -93,8 +93,8 @@ class QuickBooks {
         // return isValid
     }
     parseToken(token, realm_id) {
-        console.log(token);
-        // token = baseTokenSchema.parse(token)
+        // console.log(token)
+        token = schemas_1.baseTokenSchema.parse(token);
         return {
             ...token,
             realm_id,
@@ -113,7 +113,7 @@ class QuickBooks {
             redirect_uri: this.redirectUri,
         };
         // Post the body object to the token endpoint
-        const encodedBody = node_querystring_1.default.encode(body);
+        // const encodedBody = querystring.encode(body)
         // const res = await axios.post(this.tokenEndpoint, encodedBody, {
         //   headers: {
         //     Authorization: `Basic ${this.getAuthHeader()}`,
@@ -129,7 +129,7 @@ class QuickBooks {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Accept: 'application/json',
             },
-            body: JSON.stringify(encodedBody),
+            body: node_querystring_1.default.encode(body),
         });
         const data = await res.json();
         // Parse the response as JSON and return it
@@ -141,7 +141,7 @@ class QuickBooks {
     }
     async getRefreshedToken(token) {
         const body = { grant_type: 'refresh_token', refresh_token: token.refresh_token };
-        const encodedBody = node_querystring_1.default.encode(body);
+        // const encodedBody = querystring.encode(body)
         // const res = await axios.post(this.tokenEndpoint, encodedBody, {
         //   headers: {
         //     Authorization: `Basic ${this.getAuthHeader()}`,
@@ -156,7 +156,7 @@ class QuickBooks {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Accept: 'application/json',
             },
-            body: JSON.stringify(encodedBody),
+            body: node_querystring_1.default.encode(body),
         });
         const data = await res.json();
         const refreshedToken = this.parseToken(data, token.realm_id);

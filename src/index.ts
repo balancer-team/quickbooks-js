@@ -95,8 +95,8 @@ export class QuickBooks {
   }
 
   parseToken(token: any, realm_id: string): Token {
-    console.log(token)
-    // token = baseTokenSchema.parse(token)
+    // console.log(token)
+    token = baseTokenSchema.parse(token)
     return {
       ...token,
       realm_id,
@@ -119,7 +119,7 @@ export class QuickBooks {
     }
 
     // Post the body object to the token endpoint
-    const encodedBody = querystring.encode(body)
+    // const encodedBody = querystring.encode(body)
 
     // const res = await axios.post(this.tokenEndpoint, encodedBody, {
     //   headers: {
@@ -137,7 +137,7 @@ export class QuickBooks {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
       },
-      body: JSON.stringify(encodedBody),
+      body: querystring.encode(body),
     })
 
     const data = await res.json()
@@ -152,7 +152,7 @@ export class QuickBooks {
 
   async getRefreshedToken(token: Token): Promise<Token> {
     const body = { grant_type: 'refresh_token', refresh_token: token.refresh_token }
-    const encodedBody = querystring.encode(body)
+    // const encodedBody = querystring.encode(body)
 
     // const res = await axios.post(this.tokenEndpoint, encodedBody, {
     //   headers: {
@@ -169,7 +169,7 @@ export class QuickBooks {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
       },
-      body: JSON.stringify(encodedBody),
+      body: querystring.encode(body),
     })
 
     const data = await res.json()
