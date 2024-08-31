@@ -194,7 +194,7 @@ export class QuickBooks {
     })
 
     const data = await res.json()
-    console.log(data)
+    // console.log(data)
     const userInfo = userInfoSchema.parse(data)
     return userInfo
   }
@@ -220,12 +220,12 @@ export class QuickBooks {
 
     const data = await res.json()
 
+    console.log(data)
+
     // Check if data has a property called CompanyInfo
-    const companyInfo = z
-      .object({
-        CompanyInfo: z.any(),
-      })
-      .parse(data)
+    const companyInfo = z.object({ CompanyInfo: z.any() }).parse(data)
+
+    console.log(companyInfo)
 
     return companyInfo
   }

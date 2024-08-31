@@ -177,7 +177,7 @@ class QuickBooks {
             },
         });
         const data = await res.json();
-        console.log(data);
+        // console.log(data)
         const userInfo = schemas_1.userInfoSchema.parse(data);
         return userInfo;
     }
@@ -198,12 +198,10 @@ class QuickBooks {
             },
         });
         const data = await res.json();
+        console.log(data);
         // Check if data has a property called CompanyInfo
-        const companyInfo = zod_1.z
-            .object({
-            CompanyInfo: zod_1.z.any(),
-        })
-            .parse(data);
+        const companyInfo = zod_1.z.object({ CompanyInfo: zod_1.z.any() }).parse(data);
+        console.log(companyInfo);
         return companyInfo;
     }
     async apiGet(token, path) {
