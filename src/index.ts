@@ -194,7 +194,7 @@ export class QuickBooks {
     })
 
     const data = await res.json()
-    // console.log(data)
+    console.log(data)
     const userInfo = userInfoSchema.parse(data)
     return userInfo
   }

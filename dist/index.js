@@ -177,7 +177,7 @@ class QuickBooks {
             },
         });
         const data = await res.json();
-        // console.log(data)
+        console.log(data);
         const userInfo = schemas_1.userInfoSchema.parse(data);
         return userInfo;
     }
