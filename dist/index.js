@@ -84,17 +84,11 @@ class QuickBooks {
     }
     isAccessTokenValid(token) {
         return token.expires_at > this.getUnixTimestamp();
-        // const isValid = token.created_at + token.expires_in > this.getUnixTimestamp()
-        // return isValid
     }
     isRefreshTokenValid(token) {
         return token.x_refresh_token_expires_at > this.getUnixTimestamp();
-        // const isValid = token.created_at + token.x_refresh_token_expires_in > this.getUnixTimestamp()
-        // return isValid
     }
     parseToken(token, realm_id) {
-        // console.log(token)
-        // token = baseTokenSchema.parse(token)
         return {
             ...token,
             realm_id,
@@ -112,16 +106,6 @@ class QuickBooks {
             code: grant.code,
             redirect_uri: this.redirectUri,
         };
-        // Post the body object to the token endpoint
-        // const encodedBody = querystring.encode(body)
-        // const res = await axios.post(this.tokenEndpoint, encodedBody, {
-        //   headers: {
-        //     Authorization: `Basic ${this.getAuthHeader()}`,
-        //     'Content-Type': 'application/x-www-form-urlencoded',
-        //     Accept: 'application/json',
-        //   },
-        // })
-        // Rewrite the above block using fetch
         const res = await fetch(this.tokenEndpoint, {
             method: 'POST',
             headers: {
@@ -141,14 +125,6 @@ class QuickBooks {
     }
     async getRefreshedToken(token) {
         const body = { grant_type: 'refresh_token', refresh_token: token.refresh_token };
-        // const encodedBody = querystring.encode(body)
-        // const res = await axios.post(this.tokenEndpoint, encodedBody, {
-        //   headers: {
-        //     Authorization: `Basic ${this.getAuthHeader()}`,
-        //     'Content-Type': 'application/x-www-form-urlencoded',
-        //     Accept: 'application/json',
-        //   },
-        // })
         const res = await fetch(this.tokenEndpoint, {
             method: 'POST',
             headers: {
@@ -163,13 +139,6 @@ class QuickBooks {
         return refreshedToken;
     }
     async getUserInfo(token) {
-        // // Use axios to get the user info
-        // const res = await axios.get(this.userEndpoint, {
-        //   headers: {
-        //     Authorization: `Bearer ${token.access_token}`,
-        //     Accept: 'application/json',
-        //   },
-        // })
         const res = await fetch(this.userEndpoint, {
             headers: {
                 Authorization: `Bearer ${token.access_token}`,
@@ -177,20 +146,11 @@ class QuickBooks {
             },
         });
         const data = await res.json();
-        // console.log(data)
-        // const userInfo = userInfoSchema.parse(data)
         return data;
     }
     async getCompanyInfo(token) {
         // Build the url
         const url = `${this.apiEndpoint}/v3/company/${token.realm_id}/companyinfo/${token.realm_id}?minorversion=${this.minorversion}`;
-        // Use axios to get the company info
-        // const res = await axios.get(url, {
-        //   headers: {
-        //     Authorization: `Bearer ${token.access_token}`,
-        //     Accept: 'application/json',
-        //   },
-        // })
         const res = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${token.access_token}`,
@@ -205,12 +165,6 @@ class QuickBooks {
     async apiGet(token, path) {
         // Build the url
         const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}&minorverion=${this.minorversion}`;
-        // const res = await axios.get(url, {
-        //   headers: {
-        //     Authorization: `Bearer ${token.access_token}`,
-        //     Accept: 'application/json',
-        //   },
-        // })
         const res = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${token.access_token}`,
@@ -222,13 +176,6 @@ class QuickBooks {
     }
     async apiPost(token, path, body) {
         const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}`;
-        // const res = await axios.post(url, body, {
-        //   headers: {
-        //     Authorization: `Bearer ${token.access_token}`,
-        //     Accept: 'application/json',
-        //     'Content-Type': 'application/json',
-        //   },
-        // })
         const res = await fetch(url, {
             method: 'POST',
             headers: {
@@ -243,14 +190,6 @@ class QuickBooks {
     }
     async revokeAccess(token) {
         const body = { token: token.access_token };
-        // const encodedBody = querystring.encode(body)
-        // const res = await axios.post(this.revokeEndpoint, body, {
-        //   headers: {
-        //     Authorization: `Basic ${this.getAuthHeader()}`,
-        //     'Content-Type': 'application/json',
-        //     Accept: 'application/json',
-        //   },
-        // })
         const res = await fetch(this.revokeEndpoint, {
             method: 'POST',
             headers: {

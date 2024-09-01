@@ -27,7 +27,7 @@ export declare class QuickBooks {
     getRefreshedToken(token: Token): Promise<Token>;
     getUserInfo(token: Token): Promise<any>;
     getCompanyInfo(token: Token): Promise<any>;
-    apiGet(token: Token, path: string): Promise<unknown>;
-    apiPost(token: Token, path: string, body: any): Promise<unknown>;
+    apiGet(token: Token, path: string): Promise<any>;
+    apiPost(token: Token, path: string, body: any): Promise<any>;
     revokeAccess(token: Token): Promise<unknown>;
 }
