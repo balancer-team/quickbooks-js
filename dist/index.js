@@ -138,7 +138,7 @@ class QuickBooks {
         const refreshedToken = this.parseToken(data, token.realm_id);
         return refreshedToken;
     }
-    async validateToken(token) {
+    async validateOrRefreshToken(token) {
         // Parse the token
         token = schemas_1.tokenSchema.parse(token);
         if (this.isAccessTokenValid(token)) {
