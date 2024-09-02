@@ -13,7 +13,7 @@ export class QuickBooks {
   readonly tokenEndpoint: string
   readonly revokeEndpoint: string
   readonly userEndpoint: string
-  readonly apiEndpoint: string
+  readonly apiBaseUrl: string
   readonly scopes: { [key: string]: string }
   readonly accessTokenLatency: number
   readonly refreshTokenLatency: number
@@ -32,7 +32,7 @@ export class QuickBooks {
       config.environment === 'production'
         ? 'https://accounts.platform.intuit.com/v1/openid_connect/userinfo'
         : 'https://sandbox-accounts.platform.intuit.com/v1/openid_connect/userinfo'
-    this.apiEndpoint =
+    this.apiBaseUrl =
       config.environment === 'production'
         ? 'https://quickbooks.api.intuit.com'
         : 'https://sandbox-quickbooks.api.intuit.com'
@@ -179,7 +179,7 @@ export class QuickBooks {
 
   async getCompanyInfo(token: Token): Promise<any> {
     // Build the url
-    const url = `${this.apiEndpoint}/v3/company/${token.realm_id}/companyinfo/${token.realm_id}?minorversion=${this.minorversion}`
+    const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/companyinfo/${token.realm_id}?minorversion=${this.minorversion}`
 
     const res = await fetch(url, {
       headers: {
@@ -196,9 +196,10 @@ export class QuickBooks {
     return parsed.CompanyInfo
   }
 
-  async get(token: Token, path: string): Promise<any> {
+  async query({ token, query }: { token: any; query: string }): Promise<any> {
+    token = this.validateOrRefreshToken(token)
     // Build the url
-    const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}&minorverion=${this.minorversion}`
+    const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/query?query=${query}&minorverion=${this.minorversion}`
 
     const res = await fetch(url, {
       headers: {
@@ -212,8 +213,11 @@ export class QuickBooks {
     return data
   }
 
-  async post(token: Token, path: string, body: any): Promise<any> {
-    const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}`
+  // Do the same sort of work as above to see what else can be generalized
+  async post({ token, endpoint, body }: { token: any; endpoint: string; body: any }): Promise<any> {
+    token = this.validateOrRefreshToken(token)
+
+    const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}${endpoint}`
 
     const res = await fetch(url, {
       method: 'POST',

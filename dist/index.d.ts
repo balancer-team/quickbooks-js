@@ -8,7 +8,7 @@ export declare class QuickBooks {
     readonly tokenEndpoint: string;
     readonly revokeEndpoint: string;
     readonly userEndpoint: string;
-    readonly apiEndpoint: string;
+    readonly apiBaseUrl: string;
     readonly scopes: {
         [key: string]: string;
     };
@@ -28,7 +28,14 @@ export declare class QuickBooks {
     validateOrRefreshToken(token: any): Promise<Token>;
     getUserInfo(token: Token): Promise<any>;
     getCompanyInfo(token: Token): Promise<any>;
-    get(token: Token, path: string): Promise<any>;
-    post(token: Token, path: string, body: any): Promise<any>;
+    query({ token, query }: {
+        token: any;
+        query: string;
+    }): Promise<any>;
+    post({ token, endpoint, body }: {
+        token: any;
+        endpoint: string;
+        body: any;
+    }): Promise<any>;
     revokeAccess(token: Token): Promise<unknown>;
 }

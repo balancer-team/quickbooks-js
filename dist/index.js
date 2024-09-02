@@ -18,7 +18,7 @@ class QuickBooks {
     tokenEndpoint;
     revokeEndpoint;
     userEndpoint;
-    apiEndpoint;
+    apiBaseUrl;
     scopes;
     accessTokenLatency;
     refreshTokenLatency;
@@ -36,7 +36,7 @@ class QuickBooks {
             config.environment === 'production'
                 ? 'https://accounts.platform.intuit.com/v1/openid_connect/userinfo'
                 : 'https://sandbox-accounts.platform.intuit.com/v1/openid_connect/userinfo';
-        this.apiEndpoint =
+        this.apiBaseUrl =
             config.environment === 'production'
                 ? 'https://quickbooks.api.intuit.com'
                 : 'https://sandbox-quickbooks.api.intuit.com';
@@ -161,7 +161,7 @@ class QuickBooks {
     }
     async getCompanyInfo(token) {
         // Build the url
-        const url = `${this.apiEndpoint}/v3/company/${token.realm_id}/companyinfo/${token.realm_id}?minorversion=${this.minorversion}`;
+        const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/companyinfo/${token.realm_id}?minorversion=${this.minorversion}`;
         const res = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${token.access_token}`,
@@ -173,9 +173,10 @@ class QuickBooks {
         const parsed = zod_1.z.object({ CompanyInfo: zod_1.z.any() }).parse(data);
         return parsed.CompanyInfo;
     }
-    async get(token, path) {
+    async query({ token, query }) {
+        token = this.validateOrRefreshToken(token);
         // Build the url
-        const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}&minorverion=${this.minorversion}`;
+        const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/query?query=${query}&minorverion=${this.minorversion}`;
         const res = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${token.access_token}`,
@@ -185,8 +186,10 @@ class QuickBooks {
         const data = await res.json();
         return data;
     }
-    async post(token, path, body) {
-        const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}`;
+    // Do the same sort of work as above to see what else can be generalized
+    async post({ token, endpoint, body }) {
+        token = this.validateOrRefreshToken(token);
+        const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}${endpoint}`;
         const res = await fetch(url, {
             method: 'POST',
             headers: {
