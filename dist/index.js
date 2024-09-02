@@ -174,7 +174,7 @@ class QuickBooks {
         return parsed.CompanyInfo;
     }
     async query({ token, query }) {
-        token = this.validateOrRefreshToken(token);
+        token = await this.validateOrRefreshToken(token);
         // Build the url
         const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/query?query=${query}&minorverion=${this.minorversion}`;
         const res = await fetch(url, {
@@ -188,7 +188,7 @@ class QuickBooks {
     }
     // Do the same sort of work as above to see what else can be generalized
     async post({ token, endpoint, body }) {
-        token = this.validateOrRefreshToken(token);
+        token = await this.validateOrRefreshToken(token);
         const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}${endpoint}`;
         const res = await fetch(url, {
             method: 'POST',

@@ -197,7 +197,7 @@ export class QuickBooks {
   }
 
   async query({ token, query }: { token: any; query: string }): Promise<any> {
-    token = this.validateOrRefreshToken(token)
+    token = await this.validateOrRefreshToken(token)
     // Build the url
     const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/query?query=${query}&minorverion=${this.minorversion}`
 
@@ -215,7 +215,7 @@ export class QuickBooks {
 
   // Do the same sort of work as above to see what else can be generalized
   async post({ token, endpoint, body }: { token: any; endpoint: string; body: any }): Promise<any> {
-    token = this.validateOrRefreshToken(token)
+    token = await this.validateOrRefreshToken(token)
 
     const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}${endpoint}`
 
