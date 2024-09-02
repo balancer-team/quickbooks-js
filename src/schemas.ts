@@ -1,3 +1,5 @@
+// TODO: Create zod schemas for each QuickBooks object
+
 import { z } from 'zod'
 
 export const grantSchema = z.object({
@@ -37,17 +39,6 @@ export const tokenSchema = z.object({
 })
 
 export type Token = z.infer<typeof tokenSchema>
-
-// export interface UserInfo {
-//   sub: string
-//   givenName: string
-//   familyName: string
-//   email: string
-//   phoneNumber: string
-//   emailVerified: boolean
-//   phoneNumberVerified: boolean
-//   [key: string]: any
-// }
 
 export const userInfoSchema = z
   .object({
@@ -103,28 +94,6 @@ export interface CompanyInfo {
   }
   [key: string]: any
 }
-
-// export interface Account {
-//   Name: string
-//   SubAccount: boolean
-//   FullyQualifiedName: string
-//   Active: boolean
-//   Classification: string
-//   AccountType: string
-//   AccountSubType: string
-//   CurrentBalance: number
-//   CurrentBalanceWithSubAccounts: number
-//   CurrencyRef: { value: string; name: string }
-//   domain: string
-//   sparse: boolean
-//   Id: string
-//   SyncToken: string
-//   MetaData: {
-//     CreateTime: string
-//     LastUpdatedTime: string
-//   }
-//   [key: string]: any
-// }
 
 export const accountSchema = z.object({
   Id: z.string(),
@@ -247,22 +216,6 @@ export interface Employee {
   [key: string]: any // TODO
 }
 
-// export interface Department {
-//   Id: string
-//   Name: string
-//   FullyQualifiedName: string
-//   domain: string
-//   SyncToken: string
-//   SubDepartment: boolean
-//   sparse: boolean
-//   Active: boolean
-//   MetaData: {
-//     CreateTime: string
-//     LastUpdatedTime: string
-//   }
-//   [key: string]: any // TODO
-// }
-
 export const departmentSchema = z.object({
   Id: z.string(),
   Name: z.string(),
@@ -281,23 +234,6 @@ export const departmentSchema = z.object({
 export const departmentsSchema = z.array(departmentSchema)
 
 export type Department = z.infer<typeof departmentSchema>
-
-// export interface Class {
-//   Id: string
-//   Name: string
-//   FullyQualifiedName: string
-//   domain: string
-//   SyncToken: string
-//   SubClass: boolean
-//   sparse: boolean
-//   Active: boolean
-//   MetaData: {
-//     CreateTime: string
-//     LastUpdatedTime: string
-//   }
-
-//   [key: string]: any // TODO
-// }
 
 export const classSchema = z.object({
   Id: z.string(),

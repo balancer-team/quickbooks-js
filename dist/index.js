@@ -138,6 +138,17 @@ class QuickBooks {
         const refreshedToken = this.parseToken(data, token.realm_id);
         return refreshedToken;
     }
+    async validateToken(token) {
+        // Parse the token
+        token = schemas_1.tokenSchema.parse(token);
+        if (this.isAccessTokenValid(token)) {
+            return token;
+        }
+        if (!this.isRefreshTokenValid(token)) {
+            throw new Error('Refresh token is expired');
+        }
+        return this.getRefreshedToken(token);
+    }
     async getUserInfo(token) {
         const res = await fetch(this.userEndpoint, {
             headers: {
@@ -162,7 +173,7 @@ class QuickBooks {
         const parsed = zod_1.z.object({ CompanyInfo: zod_1.z.any() }).parse(data);
         return parsed.CompanyInfo;
     }
-    async apiGet(token, path) {
+    async get(token, path) {
         // Build the url
         const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}&minorverion=${this.minorversion}`;
         const res = await fetch(url, {
@@ -174,7 +185,7 @@ class QuickBooks {
         const data = await res.json();
         return data;
     }
-    async apiPost(token, path, body) {
+    async post(token, path, body) {
         const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}`;
         const res = await fetch(url, {
             method: 'POST',

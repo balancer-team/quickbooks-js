@@ -1,4 +1,5 @@
 "use strict";
+// TODO: Create zod schemas for each QuickBooks object
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.classesSchema = exports.classSchema = exports.departmentsSchema = exports.departmentSchema = exports.accountsSchema = exports.accountSchema = exports.userInfoSchema = exports.tokenSchema = exports.baseTokenSchema = exports.grantSchema = void 0;
 const zod_1 = require("zod");
@@ -24,16 +25,6 @@ exports.tokenSchema = zod_1.z.object({
     expires_at: zod_1.z.number(),
     realm_id: zod_1.z.string(),
 });
-// export interface UserInfo {
-//   sub: string
-//   givenName: string
-//   familyName: string
-//   email: string
-//   phoneNumber: string
-//   emailVerified: boolean
-//   phoneNumberVerified: boolean
-//   [key: string]: any
-// }
 exports.userInfoSchema = zod_1.z
     .object({
     sub: zod_1.z.string(),
@@ -45,27 +36,6 @@ exports.userInfoSchema = zod_1.z
     phoneNumberVerified: zod_1.z.boolean(),
 })
     .passthrough();
-// export interface Account {
-//   Name: string
-//   SubAccount: boolean
-//   FullyQualifiedName: string
-//   Active: boolean
-//   Classification: string
-//   AccountType: string
-//   AccountSubType: string
-//   CurrentBalance: number
-//   CurrentBalanceWithSubAccounts: number
-//   CurrencyRef: { value: string; name: string }
-//   domain: string
-//   sparse: boolean
-//   Id: string
-//   SyncToken: string
-//   MetaData: {
-//     CreateTime: string
-//     LastUpdatedTime: string
-//   }
-//   [key: string]: any
-// }
 exports.accountSchema = zod_1.z.object({
     Id: zod_1.z.string(),
     Name: zod_1.z.string(),
@@ -90,21 +60,6 @@ exports.accountSchema = zod_1.z.object({
     }),
 });
 exports.accountsSchema = zod_1.z.array(exports.accountSchema);
-// export interface Department {
-//   Id: string
-//   Name: string
-//   FullyQualifiedName: string
-//   domain: string
-//   SyncToken: string
-//   SubDepartment: boolean
-//   sparse: boolean
-//   Active: boolean
-//   MetaData: {
-//     CreateTime: string
-//     LastUpdatedTime: string
-//   }
-//   [key: string]: any // TODO
-// }
 exports.departmentSchema = zod_1.z.object({
     Id: zod_1.z.string(),
     Name: zod_1.z.string(),
@@ -120,21 +75,6 @@ exports.departmentSchema = zod_1.z.object({
     }),
 });
 exports.departmentsSchema = zod_1.z.array(exports.departmentSchema);
-// export interface Class {
-//   Id: string
-//   Name: string
-//   FullyQualifiedName: string
-//   domain: string
-//   SyncToken: string
-//   SubClass: boolean
-//   sparse: boolean
-//   Active: boolean
-//   MetaData: {
-//     CreateTime: string
-//     LastUpdatedTime: string
-//   }
-//   [key: string]: any // TODO
-// }
 exports.classSchema = zod_1.z.object({
     Id: zod_1.z.string(),
     Name: zod_1.z.string(),

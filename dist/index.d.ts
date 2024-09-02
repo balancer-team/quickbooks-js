@@ -25,9 +25,10 @@ export declare class QuickBooks {
     getAuthHeader(): string;
     getTokenFromGrant(grant: Grant): Promise<Token>;
     getRefreshedToken(token: Token): Promise<Token>;
+    validateToken(token: any): Promise<Token>;
     getUserInfo(token: Token): Promise<any>;
     getCompanyInfo(token: Token): Promise<any>;
-    apiGet(token: Token, path: string): Promise<any>;
-    apiPost(token: Token, path: string, body: any): Promise<any>;
+    get(token: Token, path: string): Promise<any>;
+    post(token: Token, path: string, body: any): Promise<any>;
     revokeAccess(token: Token): Promise<unknown>;
 }

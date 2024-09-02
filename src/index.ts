@@ -1,5 +1,5 @@
 import querystring from 'node:querystring'
-import { Grant, Config, Token, grantSchema } from './schemas'
+import { Grant, Config, Token, grantSchema, tokenSchema } from './schemas'
 import { z } from 'zod'
 import crypto from 'crypto'
 
@@ -150,6 +150,21 @@ export class QuickBooks {
     return refreshedToken
   }
 
+  async validateOrRefreshToken(token: any): Promise<Token> {
+    // Parse the token
+    token = tokenSchema.parse(token)
+
+    if (this.isAccessTokenValid(token)) {
+      return token
+    }
+
+    if (!this.isRefreshTokenValid(token)) {
+      throw new Error('Refresh token is expired')
+    }
+
+    return this.getRefreshedToken(token)
+  }
+
   async getUserInfo(token: Token): Promise<any> {
     const res = await fetch(this.userEndpoint, {
       headers: {
@@ -181,7 +196,7 @@ export class QuickBooks {
     return parsed.CompanyInfo
   }
 
-  async apiGet(token: Token, path: string): Promise<any> {
+  async get(token: Token, path: string): Promise<any> {
     // Build the url
     const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}&minorverion=${this.minorversion}`
 
@@ -197,7 +212,7 @@ export class QuickBooks {
     return data
   }
 
-  async apiPost(token: Token, path: string, body: any): Promise<any> {
+  async post(token: Token, path: string, body: any): Promise<any> {
     const url = `${this.apiEndpoint}/v3/company/${token.realm_id}${path}`
 
     const res = await fetch(url, {
