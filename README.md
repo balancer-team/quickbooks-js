@@ -1,6 +1,6 @@
 # QuickBooks JavaScript Client
 
-JavaScript library for QuickBooks API access. Built-in TypeScript support for type safety.
+JavaScript library for QuickBooks API access. Bulit-in TypeScript definitions.
 
 ### Install
 
@@ -42,15 +42,13 @@ const token = await qb.getTokenFromGrant({
 })
 ```
 
-Tokens are not stored by the `qb` instance. You must write your own application logic to store and re-use tokens. The token object must be provided with each subsequent request. The client will automatically refresh the token if necessary. If you want to manually validate or refresh the token, you can call the following function:
+Tokens are not stored by the `qb` instance. You must write your own application logic to store and re-use tokens. This is an intentional departure from the behavior of the official Intuit library. In a multi-tennant application, this makes it easier to follow which tokens are being used for which requests. In a single-tennant application, this provides for more explicit token handling. The token object must be provided with each subsequent request. The client will automatically refresh the token if necessary. If you want to manually validate or refresh the token, you can call the following function:
 
 ```js
 const definitelyValidToken = await qb.validateOrRefreshToken(staleToken)
 ```
 
-The above is called internally before every API request, but it may be convenient to call it yourself if, for example, you want to store a copy of the token and you want to ensure that it is valid and unexpired.
-
-> **NOTE:** This is an intentional departure from the behavior of the official Intuit library. In a multi-tennant application, this makes it easier to follow which tokens are being used for which requests. In a single-tennant application, this provides for more explicit handling of the token.
+The above is called internally before every request, but it may be convenient to call it yourself if, for example, you want to store a copy of the token and you want to ensure that it is valid and unexpired.
 
 ### General-purpose Query Request
 
