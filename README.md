@@ -42,13 +42,15 @@ const token = await qb.getTokenFromGrant({
 })
 ```
 
-Tokens are not stored by the `qb` instance. You must write your own application logic to store and re-use tokens. This is an intentional departure from the behavior of the official Intuit library. In a multi-tennant application, this makes it easier to follow which tokens are being used for which requests. In a single-tennant application, this provides for more explicit token handling. The token object must be provided with each subsequent request. The client will automatically refresh the token if necessary. If you want to manually validate or refresh the token, you can call the following function:
+### Access and Refresh Tokens
+
+Tokens aren't stored by the `qb` instance like they are in the official Intuit library. This makes it easier to create multi-tennant applications, where different tokens have to be used for different users.
+
+Intuit access tokens are valid for one hour, and refresh tokens are valid for 100 days. You should ensure you are using an active access token by calling the following function in your application. If the access token is still valid, it will simply return the token. If it needs to be refreshed, it will send the request to Intuit and obtain the refreshed token.
 
 ```js
 const definitelyValidToken = await qb.validateOrRefreshToken(staleToken)
 ```
-
-The above is called internally before every request, but it may be convenient to call it yourself if, for example, you want to store a copy of the token and you want to ensure that it is valid and unexpired.
 
 ### General-purpose Query Request
 
@@ -66,9 +68,9 @@ const vendors = await qb.query({
 Use any endpoint and create any object using a general-purpose post request. Refer to the API reference for endpoints and object structures: https://developer.intuit.com/app/developer/qbo/docs/api/accounting/all-entities/account
 
 ```js
-await qb.post({
-  token: user.token,
+const createdJournalEntry = await qb.post({
+  token: token,
   endpoint: '/journalentry',
-  body: myJournalEntry,
+  body: newJournalEntry,
 })
 ```

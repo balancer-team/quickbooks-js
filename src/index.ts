@@ -50,8 +50,8 @@ export class QuickBooks {
       // IntuitName: 'intuit_name',
     }
     this.minorversion = '65'
-    this.accessTokenLatency = 60 // 60 seconds
-    this.refreshTokenLatency = 60 * 60 * 24 * 3 // three days
+    this.accessTokenLatency = 60 // 60 second buffer for access token refresh
+    this.refreshTokenLatency = 60 * 60 * 24 * 3 // 3 day buffer for refresh token refresh
   }
 
   getUnixTimestamp() {
