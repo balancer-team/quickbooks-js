@@ -138,7 +138,7 @@ class QuickBooks {
         const refreshedToken = this.parseToken(data, token.realm_id);
         return refreshedToken;
     }
-    async validateToken(token) {
+    async getValidToken(token) {
         // Parse the token
         token = schemas_1.tokenSchema.parse(token);
         if (this.isAccessTokenValid(token)) {
@@ -174,7 +174,7 @@ class QuickBooks {
         return parsed.CompanyInfo;
     }
     async query({ token, query }) {
-        token = await this.validateToken(token);
+        token = await this.getValidToken(token);
         // Build the url
         const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/query?query=${query}&minorverion=${this.minorversion}`;
         const res = await fetch(url, {
@@ -188,7 +188,7 @@ class QuickBooks {
     }
     // Do the same sort of work as above to see what else can be generalized
     async post({ token, endpoint, body }) {
-        token = await this.validateToken(token);
+        token = await this.getValidToken(token);
         const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}${endpoint}`;
         const res = await fetch(url, {
             method: 'POST',

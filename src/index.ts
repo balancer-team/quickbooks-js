@@ -150,7 +150,7 @@ export class QuickBooks {
     return refreshedToken
   }
 
-  async validateToken(token: any): Promise<Token> {
+  async getValidToken(token: any): Promise<Token> {
     // Parse the token
     token = tokenSchema.parse(token)
 
@@ -197,7 +197,7 @@ export class QuickBooks {
   }
 
   async query({ token, query }: { token: any; query: string }): Promise<any> {
-    token = await this.validateToken(token)
+    token = await this.getValidToken(token)
     // Build the url
     const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/query?query=${query}&minorverion=${this.minorversion}`
 
@@ -215,7 +215,7 @@ export class QuickBooks {
 
   // Do the same sort of work as above to see what else can be generalized
   async post({ token, endpoint, body }: { token: any; endpoint: string; body: any }): Promise<any> {
-    token = await this.validateToken(token)
+    token = await this.getValidToken(token)
 
     const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}${endpoint}`
 

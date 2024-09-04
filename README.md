@@ -48,7 +48,7 @@ The `token` is an object that includes the access and refresh tokens, the realm 
 Intuit's access tokens are valid for one hour, and refresh tokens are valid for 100 days. You should ensure you are using an active access token by calling the following function. If the access token is still valid, it will simply return the token. If it needs to be refreshed, it will send the request to Intuit and obtain the refreshed token.
 
 ```js
-const validToken = await qb.validateToken(staleToken) // -->
+const validToken = await qb.getValidToken(staleToken) // -->
 // {
 //   access_token: 'eyJlbmMiOiJBMTI4...',
 //   refresh_token: 'AB11734177244q21...',
