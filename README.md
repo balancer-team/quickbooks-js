@@ -1,6 +1,6 @@
 # QuickBooks JavaScript Client
 
-JavaScript library for QuickBooks API access. Bulit-in TypeScript definitions.
+JavaScript client for QuickBooks. TypeScript definitions built in.
 
 ### Install
 
@@ -17,7 +17,7 @@ export const qb = new QuickBooks({
   clientId: 'YOUR_CLIENT_ID',
   clientSecret: 'YOUR_CLIENT_SECRET',
   redirectUri: 'YOUR_REDIRECT_URI',
-  environment: 'SANDBOX_OR_PRODUCTION_ENVIRONMENT',
+  environment: 'SANDBOX_OR_PRODUCTION',
 })
 ```
 
@@ -27,12 +27,11 @@ Begin the OAuth 2.0 flow by getting the auth url.
 
 ```js
 const authUrl = qb.getAuthUrl()
-window.location.href = authUrl
 ```
 
 ### Get Access Token from Grant
 
-Complete the OAuth 2.0 flow by retrieving the token. The token is an object that includes both the access and refresh token, the realm ID, and other metadata.
+Complete the OAuth 2.0 flow by retrieving the access token.
 
 ```js
 const token = await qb.getTokenFromGrant({
@@ -44,12 +43,12 @@ const token = await qb.getTokenFromGrant({
 
 ### Access and Refresh Tokens
 
-Tokens aren't stored by the `qb` instance like they are in the official Intuit library. This makes it easier to create multi-tennant applications, where different tokens have to be used for different users.
+The `token` is an object that includes the access and refresh tokens, the realm ID, expirations, and other metadata. Tokens aren't stored in the `qb` instance. You must write your own application logic to manage tokens. This makes it easier to create multi-tenant applications, where different tokens have to be used for different users.
 
-Intuit access tokens are valid for one hour, and refresh tokens are valid for 100 days. You should ensure you are using an active access token by calling the following function in your application. If the access token is still valid, it will simply return the token. If it needs to be refreshed, it will send the request to Intuit and obtain the refreshed token.
+Intuit's access tokens are valid for one hour, and refresh tokens are valid for 100 days. You should ensure you are using an active access token by calling the following function. If the access token is still valid, it will simply return the token. If it needs to be refreshed, it will send the request to Intuit and obtain the refreshed token.
 
 ```js
-const definitelyValidToken = await qb.validateOrRefreshToken(staleToken)
+const definitelyValidToken = await qb.validateToken(staleToken)
 ```
 
 ### General-purpose Query Request

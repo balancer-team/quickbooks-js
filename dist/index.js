@@ -54,8 +54,8 @@ class QuickBooks {
             // IntuitName: 'intuit_name',
         };
         this.minorversion = '65';
-        this.accessTokenLatency = 60; // 60 seconds
-        this.refreshTokenLatency = 60 * 60 * 24 * 3; // three days
+        this.accessTokenLatency = 60; // 60 second buffer for access token refresh
+        this.refreshTokenLatency = 60 * 60 * 24 * 3; // 3 day buffer for refresh token refresh
     }
     getUnixTimestamp() {
         return Math.floor(Date.now() / 1000);
@@ -138,7 +138,7 @@ class QuickBooks {
         const refreshedToken = this.parseToken(data, token.realm_id);
         return refreshedToken;
     }
-    async validateOrRefreshToken(token) {
+    async validateToken(token) {
         // Parse the token
         token = schemas_1.tokenSchema.parse(token);
         if (this.isAccessTokenValid(token)) {
@@ -174,7 +174,7 @@ class QuickBooks {
         return parsed.CompanyInfo;
     }
     async query({ token, query }) {
-        token = await this.validateOrRefreshToken(token);
+        token = await this.validateToken(token);
         // Build the url
         const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}/query?query=${query}&minorverion=${this.minorversion}`;
         const res = await fetch(url, {
@@ -188,7 +188,7 @@ class QuickBooks {
     }
     // Do the same sort of work as above to see what else can be generalized
     async post({ token, endpoint, body }) {
-        token = await this.validateOrRefreshToken(token);
+        token = await this.validateToken(token);
         const url = `${this.apiBaseUrl}/v3/company/${token.realm_id}${endpoint}`;
         const res = await fetch(url, {
             method: 'POST',
