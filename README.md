@@ -1,6 +1,6 @@
 # QuickBooks JavaScript Client
 
-JavaScript client for QuickBooks. TypeScript definitions built in.
+JavaScript client for QuickBooks. Easily connect to the QuickBooks API. Make queries and create objects. TypeScript definitions are built in.
 
 ### Install
 
