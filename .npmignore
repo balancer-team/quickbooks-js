@@ -1,0 +1,14 @@
+# Dependency directories
+node_modules/
+
+# Environment and OS files
+.env
+.DS_Store
+
+# Development files
+src/
+test/
+tsconfig.json
+
+# IDE settings
+.vscode/
