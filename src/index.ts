@@ -49,7 +49,7 @@ export class QuickBooks {
       openid: 'openid',
       // IntuitName: 'intuit_name',
     }
-    this.minorversion = '65'
+    this.minorversion = '75'
     this.accessTokenLatency = 60 // 60 second buffer for access token refresh
     this.refreshTokenLatency = 60 * 60 * 24 * 3 // 3 day buffer for refresh token refresh
   }
