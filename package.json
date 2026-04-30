@@ -1,5 +1,5 @@
 {
-  "name": "@balancer-team/quickbooks",
+  "name": "@nextform/quickbooks",
   "version": "0.0.18",
   "description": "QuickBooks JavaScript Client",
   "main": "dist/index.js",
@@ -21,8 +21,8 @@
   "dependencies": {
     "zod": "^3.23.8"
   },
-  "repository": "github:balancer-team/quickbooks-js",
-  "homepage": "https://www.balancer.team",
+  "repository": "github:nextform-app/quickbooks-js",
+  "homepage": "https://nextform.app",
   "keywords": [
     "quickbooks",
     "intuit",
