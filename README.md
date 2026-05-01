@@ -5,13 +5,13 @@ JavaScript client for QuickBooks. Easily connect to the QuickBooks API. Make que
 ### Install
 
 ```
-npm i @balancer-team/quickbooks
+npm i @nextform/quickbooks
 ```
 
 ### Configure
 
 ```js
-import { QuickBooks } from '@balancer-team/quickbooks'
+import { QuickBooks } from '@nextform/quickbooks'
 
 export const qb = new QuickBooks({
   clientId: 'YOUR_CLIENT_ID',
